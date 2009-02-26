@@ -1,0 +1,75 @@
+## What is it? ##
+
+Simply put passy is a [Ubiquity](http://labs.mozilla.com/2008/08/introducing-ubiquity/) script that will generate a secure password for every site you visit but only requires you to rememeber one master password.
+
+The idea is that it should be easy to generate AND retrieve secure passwords for every site you visit. There are tons of tools to generate a good password but few that make it trivial to use, and many of them require leaving your browser entirely. And remembering secure passwords is never easy. With passy, once you have given it your master password all you have to do to get a good password for ANY site is to launch [Ubiquity](http://labs.mozilla.com/2008/08/introducing-ubiquity/) and type "passy". That's it. It'll insert the generated password into whatever text or password field you have selected. You can ask it for longer, or shorter, passwords, but just typing "passy" is enough to get you a strong password that's specific to the current web site.
+
+Only one master password to remember, strong site specific passwords, quick and easy usage, what more could you want? 
+
+## Installation ##
+
+First install Ubiquity. Then, if you don't see a "Subscribe" button above, go to [the passy home page](http://www.masukomi.org/projects/ubiquity/passy/index.html). Click on the Subscribe button and you're done. 
+
+## Usage ##
+
+First click into the password field you want it to fill in then launch Ubiquity...
+
+The simplest usage is to just type "passy" into Ubiquity. This will generate a medium length password (at least 16 characters) with upper and lower case characters and at least one number.
+
+You can specify "short", "med", or "long" passwords by passing one of them as the first parameter:
+ passy long
+
+If you want to generate a password for a domain other than the one passy has detected (or if it wasn't able to detect one) just pass that in as the second paramater:
+ passy long example.com
+
+The first time you run passy in each session it will ask you for your master password, which it will encrypt and store in memory until you close Firefox or clear it with: 
+ passy clear 
+
+Once you've submitted the form with your generated password Firefox will ask if you'd like it to remember it just like any other password, so you'll rarely need to run it.
+
+## Screenshot Walkthrough ##
+
+First select the password field.
+
+![Select a password field](http://www.masukomi.org/projects/ubiquity/passy/images/passy_initial_form.png)
+
+Then launch Ubiquity and type passy. It'll automatically determine the correct domain name to generate the password for.
+
+![Default usage](http://www.masukomi.org/projects/ubiquity/passy/images/passy_default.png)
+
+If you hit enter now it'll get inserted into your password field OR specify a long password, and, optionally, generate the password for a domain other than the one you're currently on.
+
+![specifying longer passwords and differend domains](http://www.masukomi.org/projects/ubiquity/passy/images/passy_override.png)
+
+The _first time_ you go to generate a password after launching Firefox it'll ask you for your master password, which it will encrypt and store in memory for you until you type "passy clear" into Ubiquity. This way it won't have to keep bugging you for it.
+
+![It asks you for the master password the first time only](http://www.masukomi.org/projects/ubiquity/passy/images/passy_master_password.jpg)
+
+Then it'll generate a password and insert it into the field you selected at the start.
+
+![The generated password is inserted into your selected field](http://www.masukomi.org/projects/ubiquity/passy/images/passy_inserted.jpg)
+
+## How does it work? ##
+
+Essentially passy takes your master password, encrypts it, adds the domain name you've specified, encrypts that, chops it to the appropriate length, and runs it through an algorithm to make sure that there is *at least* one upper case and one lower case letter and one number. 
+
+Encryption is done via the SHA1 algorithm and if you always choose long the password will be unique for every site. Otherwise it is possible, but *very unlikely*, that two, or more, sites could wind up with the same password. 
+
+## Help ##
+
+If you've got questions that aren't answered here, or in the instructions you see when using passy, just drop an e-mail to <masukomi@masukomi.org>
+
+## TODO ##
+
+* Entering the master password happens in the clear. This should be done with a modal dialog with a password field.
+* Update this so that we have two versions. One that copies the generated password to the clipboard
+and one that inserts it into a text field.
+* Warn the user if they don't have a text field selected for it to insert into.
+* create an HTML version that people can access when not at a computer where they can install Ubiquity.
+
+
+## Credits & License ##
+passy was created by [masukomi](http://www.masukomi.org), and inspired by [a post at TE chnology](http://blog.tetrack.com/2009/02/too-many-passwords/) . The lock icon is part of the [FamFamFam silk icons set](http://www.famfamfam.com/lab/icons/silk/) by Mark James and is distributed under the Creative [Commons Attribution 2.5 License](http://creativecommons.org/licenses/by/2.5/). passy is copyright 2009 Kate Rhodes and distributed under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
+
+<link rel="commands" href="http://www.masukomi.org/projects/ubiquity/passy/passy.js" name="Script Name" />
+

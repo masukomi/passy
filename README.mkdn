@@ -17,13 +17,22 @@ First click into the password field you want it to fill in then launch Ubiquity.
 The simplest usage is to just type "passy" into Ubiquity. This will generate a medium length password (at least 16 characters) with upper and lower case characters and at least one number.
 
 You can specify "short", "med", or "long" passwords by passing one of them as the first parameter:
+
+<pre>
  passy long
+</pre>
 
 If you want to generate a password for a domain other than the one passy has detected (or if it wasn't able to detect one) just pass that in as the second paramater:
- passy long example.com
 
-The first time you run passy in each session it will ask you for your master password, which it will encrypt and store in memory until you close Firefox or clear it with: 
+<pre>
+ passy long example.com
+</pre>
+
+The first time you run passy in each session it will ask you for your master password, which it will encrypt and store in memory until you close Firefox or clear it with:
+ 
+<pre>
  passy clear 
+</pre>
 
 Once you've submitted the form with your generated password Firefox will ask if you'd like it to remember it just like any other password, so you'll rarely need to run it.
 

@@ -8,7 +8,7 @@ Only one master password to remember, strong site specific passwords, quick and 
 
 ## Installation ##
 
-First install Ubiquity. Then, if you don't see a "Subscribe" button above, go to [the passy home page](http://www.masukomi.org/projects/ubiquity/passy/index.html). Click on the Subscribe button and you're done. 
+First install Ubiquity. Then, if you don't see a "Subscribe" button above, go to [the passy home page](http://www.masukomi.org/projects/ubiquity/passy/). Click on the Subscribe button and you're done. 
 
 ## Usage ##
 
@@ -70,6 +70,8 @@ and one that inserts it into a text field.
 
 ## Credits & License ##
 passy was created by [masukomi](http://www.masukomi.org), and inspired by [a post at TE chnology](http://blog.tetrack.com/2009/02/too-many-passwords/) . The lock icon is part of the [FamFamFam silk icons set](http://www.famfamfam.com/lab/icons/silk/) by Mark James and is distributed under the Creative [Commons Attribution 2.5 License](http://creativecommons.org/licenses/by/2.5/). passy is copyright 2009 Kate Rhodes and distributed under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
+
+passy's source code is available at [GitHub](https://github.com/masukomi/passy/).
 
 <link rel="commands" href="http://www.masukomi.org/projects/ubiquity/passy/passy.js" name="Script Name" />
 

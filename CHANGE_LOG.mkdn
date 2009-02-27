@@ -1,0 +1,16 @@
+# passy Version History / Change Log #
+
+## Version 0.2 ##
+
+Switched to using domain names of a minimum significant length.
+
+For example, delicious.com instead of secure.delicious.com. Uses Colin Jackson's domain extraction algorithm to compensate for international naming schemes like .co.jp
+
+While the password generation algorithm remains the same the generated passwords may end up being based on different domains unles users are careful, which would result in different passwords. Workaround is to specify the fully qualified domain name for sites you've already generated passwords for. Hopefully this will be the last change with the potential to change default behavior.
+
+
+## Version 0.1 ##
+
+Initial version.
+Inserts generated password into page. 
+Uses fully qualified domain names.

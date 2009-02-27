@@ -78,7 +78,7 @@ and one that inserts it into a text field.
 
 
 ## Credits & License ##
-passy was created by [masukomi](http://www.masukomi.org), and inspired by [a post at TE chnology](http://blog.tetrack.com/2009/02/too-many-passwords/) . The lock icon is part of the [FamFamFam silk icons set](http://www.famfamfam.com/lab/icons/silk/) by Mark James and is distributed under the Creative [Commons Attribution 2.5 License](http://creativecommons.org/licenses/by/2.5/). passy is copyright 2009 Kate Rhodes and distributed under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
+passy was created by [masukomi](http://www.masukomi.org), and inspired by [a post at TE chnology](http://blog.tetrack.com/2009/02/too-many-passwords/) . The lock icon is part of the [FamFamFam silk icons set](http://www.famfamfam.com/lab/icons/silk/) by Mark James and is distributed under the Creative [Commons Attribution 2.5 License](http://creativecommons.org/licenses/by/2.5/). passy is Copyright 2009 Kate Rhodes and distributed under the [MIT License](http://www.opensource.org/licenses/mit-license.php). The domain extraction algorithm it uses is  Copyright 2005 Collin Jackson and distributed under an Apache-style license.
 
 passy's source code is available at [GitHub](https://github.com/masukomi/passy/).
 

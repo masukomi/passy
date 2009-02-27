@@ -10,17 +10,21 @@ CmdUtils.CreateCommand({
 
 		if (paramsA[0] != 'clear'){
 			var previewHeader = '';
-			if (paramsA[1] !=''){
-				previewHeader = "Will generate " + paramsA[0] + " length password for " + paramsA[1];
+			if (paramsA[0] != null){
+				if (paramsA[1] !=''){
+					previewHeader = "Will generate " + paramsA[0] + " length password for " + paramsA[1];
+				} else {
+					previewHeader = "<em><i>Unable to determine domain.</i></em> You'll have to specify length and domain.";
+				}
 			} else {
-				previewHeader = "<em><i>Unable to determine domain.</i></em> You'll have to specify length and domain.";
+				previewHeader ="<p>Wait... What?</p>";
 			}
-			
 			
 
 			pblock.innerHTML = previewHeader 
-			+ "<br /><br />Length is optional (unless you're specifying a domain) and can be: \"short\", \"med\", or \"long\" (defaults to med)."
-			+ "<br />Domain is optional and defaults to the current site."
+			+ "<p>Usage: passy <length> <domain><br />Both are optional but if you want to specify a domain you must specify a length first.</p>"
+			+ "<p>Length  can be: \"short\", \"med\", or \"long\" (defaults to med)."
+			+ "<br />Domain defaults to the current site.</p>"
 			+ "<p>Please note: Your master password will be encrypted and stored in memory until you close Firefox or execute 'passy clear'.</p>"
 			;
 		} else {
@@ -37,6 +41,10 @@ CmdUtils.CreateCommand({
 	},
 	execute: function( params ) {
 		var paramsA = this.parseParams(params);
+		if (paramsA[0] == null){
+			displayMessage("Sorry, I'm not sure what you wanted me to do.");
+			return;
+		}
 		if (paramsA[0] != 'clear'){
 			if (this.masterPass == null){
 				//TODO launch a modal dialog with a password field 
@@ -87,18 +95,24 @@ CmdUtils.CreateCommand({
 	getFirstParam: function(specifiedLength){
 		// need to rethink the naming here. 
 		//as sometimes the first param is the clear command
-		if (specifiedLength == null 
-			|| specifiedLength == "medium"
-		){
+		if (specifiedLength == null || specifiedLength.length == 0){
 			return "med"; 
 		}
-		if (specifiedLength != "short" 
-			&& specifiedLength != "med"
-			&& specifiedLength != "long"
-			&& specifiedLength != "clear"){
+		//guaranteed there's *something* there.
+		if (/s|sh|shor|short/i.test(specifiedLength)){
+			return "short";
+		}
+		if (/m|me|med|medi|mediu|medium/i.test(specifiedLength)){
 			return "med";
 		}
-		return specifiedLength;
+		if (/l|lo|lon|long/i.test(specifiedLength)){
+			return "long";
+		}
+		if (specifiedLength == "clear"){
+			return specifiedLength;
+		}
+		return null;
+		
 	},
 	getDomain: function(specifiedDomain){
 		
@@ -236,7 +250,6 @@ CmdUtils.CreateCommand({
 		}
 		return -1;
 	}
-
 	
 })
 

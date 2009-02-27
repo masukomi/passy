@@ -1,7 +1,9 @@
 CmdUtils.CreateCommand({
 	name: "passy",
+	description: "A strong, and simple, password generator.",
 	homepage: "http://www.masukomi.org/projects/ubiquity/passy/index.html",
-	athor : {name: "masukomi (Kate Rhodes)", email:"masukomi@masukomi.org"},
+	author : {name: "masukomi", email:"masukomi@masukomi.org"},
+		help : "<p>Usage: passy &lt;length&gt; &lt;domain&gt;<br />Both are optional but if you want to specify a domain you must specify a length first.</p><p>Length  can be: \"short\", \"med\", or \"long\" (defaults to med).<br />Domain defaults to the current site.</p><p>Please note: Your master password will be encrypted and stored in memory until you close Firefox or execute 'passy clear'.</p>",
 	license: "MIT",
 	icon: "http://www.masukomi.org/projects/ubiquity/passy/icons/lock.png",
 	takes: {"[length [domain]]": noun_arb_text},
@@ -21,12 +23,8 @@ CmdUtils.CreateCommand({
 			}
 			
 
-			pblock.innerHTML = previewHeader 
-			+ "<p>Usage: passy <length> <domain><br />Both are optional but if you want to specify a domain you must specify a length first.</p>"
-			+ "<p>Length  can be: \"short\", \"med\", or \"long\" (defaults to med)."
-			+ "<br />Domain defaults to the current site.</p>"
-			+ "<p>Please note: Your master password will be encrypted and stored in memory until you close Firefox or execute 'passy clear'.</p>"
-			;
+			pblock.innerHTML = previewHeader + this.help;
+
 		} else {
 			/* FIXME: always claims is null even when it isn't in execute.
 			if (this.masterPass == null){

@@ -19,7 +19,7 @@
 
 <p>First click into the password field you want it to fill in then launch Ubiquity...</p>
 
-<p>The simplest usage is to just type "passy" into Ubiquity. This will generate a medium length password (at least 16 characters) with upper and lower case characters and at least one number.</p>
+<p>The simplest usage is to just type "passy" into Ubiquity. This will generate a medium length password and insert it into whatever you have selected on the page. It is guaranteed to have upper and lower case characters and at least one number.</p>
 
 <p>You can specify "short", "med", or "long" passwords by passing one of them as the first parameter:</p>
 
@@ -31,6 +31,14 @@
 
 <pre>
  passy long example.com
+</pre>
+
+<p>If you'd rather copy the password to your clipboard you can use the same commands as above, just precede them with "copy". For example:</p>
+
+<pre>
+ passy copy
+ passy copy long
+ passy copy long example.com
 </pre>
 
 <p>The first time you run passy in each session it will ask you for your master password, which it will encrypt and store in memory until you close Firefox or clear it with:</p>
@@ -71,7 +79,7 @@
 
 <h2>Help</h2>
 
-<p>If you've got questions that aren't answered here, or in the instructions you see when using passy, just drop an e-mail to <a href="&#109;&#x61;&#105;&#x6C;&#x74;&#111;:&#109;&#x61;s&#x75;&#x6B;o&#109;&#105;&#64;&#x6D;&#x61;&#115;&#117;&#107;&#111;m&#x69;&#x2E;&#x6F;&#114;&#103;">&#109;&#x61;s&#x75;&#x6B;o&#109;&#105;&#64;&#x6D;&#x61;&#115;&#117;&#107;&#111;m&#x69;&#x2E;&#x6F;&#114;&#103;</a></p>
+<p>If you've got questions that aren't answered here, or in the instructions you see when using passy, just drop an e-mail to <a href="&#x6D;&#97;&#x69;&#108;t&#111;:&#109;&#x61;&#115;&#x75;&#x6B;&#x6F;&#109;&#x69;&#64;&#109;&#97;&#x73;u&#107;&#111;&#x6D;&#x69;&#x2E;&#x6F;&#x72;&#103;">&#109;&#x61;&#115;&#x75;&#x6B;&#x6F;&#109;&#x69;&#64;&#109;&#97;&#x73;u&#107;&#111;&#x6D;&#x69;&#x2E;&#x6F;&#x72;&#103;</a></p>
 
 <h2>TODO</h2>
 

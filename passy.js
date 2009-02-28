@@ -289,6 +289,8 @@ CmdUtils.CreateCommand({
 				if (paramsA.length > 1){
 					// and a domain
 					results.domain = pc.getDomain(paramsA[1]);
+				} else {
+					results.domain = pc.getDomain(null);
 				}
 			} else {
 				if (p1 == "clear"){

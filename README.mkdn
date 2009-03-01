@@ -91,5 +91,5 @@ passy was created by [masukomi](http://www.masukomi.org), and inspired by [a pos
 
 passy's source code is available at [GitHub](https://github.com/masukomi/passy/).
 
-<link rel="commands" href="http://www.masukomi.org/projects/ubiquity/passy/passy.js" name="Script Name" />
+<link rel="commands" href="http://www.masukomi.org/projects/ubiquity/passy/ubiquity/passy.js" name="Script Name" />
 

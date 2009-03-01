@@ -89,8 +89,13 @@ CmdUtils.CreateCommand({
 					);
 					
 					if (! results.copy){
-						CmdUtils.setSelection(password , {text:password});
-						displayMessage("Password inserted into page.");
+						//see if there's something selected
+						if (results.hasFocus){
+							CmdUtils.setSelection(password , {text:password});
+							displayMessage("Password inserted into page.");
+						} else {
+							displayMessage("Select something for me to insert it into.");
+						}
 					} else {
 						CmdUtils.copyToClipboard( password )
 						displayMessage("Copied password to clipboard.");
@@ -136,6 +141,16 @@ CmdUtils.CreateCommand({
 
 		var results = {copy:false}; // most options don't involve copying
 		
+		var context = CmdUtils.__globalObject.context;
+		var focused = context.focusedElement;
+		//TODO only set hasFocus to true if they have a text input field 
+		// (of any sort) selected. text/password/textarea/awesomebar/search box...
+		if (focused != null && typeof focused.setSelectionRange == 'function'){
+			results.hasFocus =true;
+		} else {
+			results.hasFocus = false;
+		}
+			
 		var pc = new PassyCore();
 		var genPassCommand = "genpass";
 		if (paramsA.length > 0){

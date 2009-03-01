@@ -28,12 +28,31 @@ If you want to generate a password for a domain other than the one passy has det
  passy long example.com
 </pre>
 
+
+
 If you'd rather copy the password to your clipboard you can use the same commands as above, just precede them with "copy". For example:
 
 <pre>
  passy copy
  passy copy long
  passy copy long example.com
+ passy copy long example.com with temp
+</pre>
+
+"with" modifiers. The "with" clause can be used in two ways. If you say "with temp" it will ask you for a master password that will only be used this time and not stored. If you've already entered a master password this session that will remain intact for future password generation. 
+
+<pre>
+ passy with temp
+ passy long with temp
+ passy long example.com with temp
+</pre>
+
+If you enter anything other than "temp" after with it'll use it as a suffix that is appended to the end of the generated password. So, if the generated password was 4a3B7e7b4696266a then adding "with !%2" would generate 4a3B7e7b4696266a!%2  This is useful for the occasional site that requires punctuation, or other special characters in a password. Because passy never stores passwords you'll need to remember which sites you added a suffix to.
+
+<pre>
+ passy with !%2 
+ passy long with !%2
+ passy long example.com with !%2
 </pre>
 
 

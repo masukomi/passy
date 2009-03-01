@@ -1,0 +1,28 @@
+## Pre-Release tests ##
+
+Please check the following options before releasing just to make sure everything works as expected
+
+passy
+passy with temp
+passy with baz
+
+passy long
+passy long with temp
+passy long with baz
+
+passy long example.com
+passy long example.com with temp
+passy long example.com with baz
+
+passy copy
+passy copy with temp
+passy copy with baz
+
+passy copy long 
+passy copy long with temp
+passy copy long with baz
+
+passy copy long example.com
+passy copy long example.com with temp
+passy copy long example.com with baz
+

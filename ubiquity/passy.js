@@ -7,35 +7,42 @@ CmdUtils.CreateCommand({
 	description: "A strong, and simple, password generator.",
 	homepage: "http://www.masukomi.org/projects/ubiquity/passy/index.html",
 	author : {name: "masukomi", email:"masukomi@masukomi.org"},
-		help : "<span style='font-size: 80%;'><dl><dt>Usage:</dt><dd><dl><dt style='font-style:italic;'>passy</dt><dd>Generates a medium length password for the current domain and inserts it into the page.</dd><dt style='font-style:italic;'>passy short/med/long</dt><dd>Same as above but with a password of your specified length.</dd><dt style='font-style:italic;'>passy short/med/long example.com</dt><dd>Same as above but with your specifed length and domain.</dd><dt style='font-style:italic;'>passy copy (short/med/long (domain))</dt><dd>Works just like the options above but copies the password to your clipboard instead.</dd><dt style='font-style:italic;'>passy clear</dt><dd>Clears your encrypted master password from memory</dd></dl></dd></dl></span>",
+		help : "<span style='font-size: 80%;'><dl><dt>Usage:</dt><dd><dl><dt style='font-style:italic;'>passy</dt><dd>Generates a medium length password for the current domain and inserts it into the page.</dd><dt style='font-style:italic;'>passy short/med/long</dt><dd>Same as above but with a password of your specified length.</dd><dt style='font-style:italic;'>passy short/med/long example.com</dt><dd>Same as above but with your specifed length and domain.</dd><dt style='font-style:italic;'>passy copy (short/med/long (domain))</dt><dd>Works just like the options above but copies the password to your clipboard instead.</dd><dt>... with ____</dt><dd>The with modifier can be used in two ways. <dl><dt style='font-style:italic;'>with temp</dt><dd>If you say \"with temp\" it'll ask you for a temporary master password that won't be stored. If you've already stored one this session it'll remain untouched for use the next time.</dd><dt style='font-style:italic;'>with &lt;suffix (anything except \"temp\")&gt;</dt><dd>This will append whatever text you enter to the end of the generated password. Useful if they require characters other than letters or numbers in your passwords.</dd></dl></dd><dt style='font-style:italic;'>passy clear</dt><dd>Clears your encrypted master password from memory</dd></dl></dd></dl></span>",
 
 	license: "MIT",
 	icon: "http://www.masukomi.org/projects/ubiquity/passy/icons/lock.png",
 	takes: {"[length [domain]]": noun_arb_text},
+	modifiers: {"with" : noun_arb_text},
 
-
-	preview: function( pblock, params ) {
-		var results = this.parseParams(params);
+	preview: function( pblock, params, mods ) {
+		var results = this.parseParams(params, mods);
 
 		if (results.command != 'clear'){
 			var previewHeader = '';
 			var undefined_var;
 			if (results.length != null && results.length != undefined_var){
 				if (results.domain != null){
-					previewHeader = "Will generate <em>" + results.length + "</em> length password for <em>" + results.domain + "</em>";
+					previewHeader = "Will generate <em class='passy'>" + results.length + "</em> length password for <em class='passy'>" + results.domain + "</em>";
 					if (! results.copy){
-						previewHeader += " and <em>insert</em> it into the page."
+						previewHeader += " and <em class='passy'>insert</em> it into the page"
 					} else {
-						previewHeader += " and <em>copy</em> it to the clipboard."
+						previewHeader += " and <em class='passy'>copy</em> it to the clipboard"
 					}
 				} else {
-					previewHeader = "<em><i>Unable to determine domain.</i></em> You'll have to specify length and domain.";
+					previewHeader = "<em class='passy'><i>Unable to determine domain.</i></em> You'll have to specify length and domain";
 				}
+				if (results.useTempMaster){
+					previewHeader += " using a <em class='passy'>temporary master password</em>"
+				} 
+				if (results.suffix != null){
+					previewHeader += " and <em class='passy'>append</em> your suffix to the end of it"
+				}
+				previewHeader += ".";
+				
 			} else {
 				previewHeader ="<p>Wait... What?</p>";
 			}
 			
-
 			pblock.innerHTML = previewHeader + "<p>&nbsp;</p>" + this.help;
 
 		} else {
@@ -48,45 +55,51 @@ CmdUtils.CreateCommand({
 			//}
 		}
 	},
-	execute: function( params ) {
-		var results = this.parseParams(params);
+	execute: function( params, mods ) {
+		var results = this.parseParams(params, mods);
 
 		if (results.command != 'clear'){ // only other option is genpass
 			if (results.length == null){
 				displayMessage("Sorry, I'm not sure what you wanted me to do.");
 				return;
 			}
-			// do we have a master password stored?
 			
-			if (this.masterPass == null){
+			// do we have a master password stored?
+			if (this.masterPass == null || results.useTempMaster){
 				//TODO launch a modal dialog with a password field 
 				// so that the password isn't displayed in the open 
 				// during entry.
-				var userInput = Utils.currentChromeWindow.prompt("I'll need your master password");
+				var userInput = Utils.currentChromeWindow.prompt("I'll need your "
+					+ (results.useTempMaster ? "temporary " : '')
+					+ "master password");
 				
 				if (userInput == null || userInput == ''){
 					displayMessage("You must enter a master password.");
 					return;
 				}
-				
-				this.masterPass = Utils.computeCryptoHash("SHA1", 
-					userInput
-					);
+				if (! results.useTempMaster){
+					this.masterPass = Utils.computeCryptoHash("SHA1", userInput);
+				} else {
+					results.tempMaster = Utils.computeCryptoHash("SHA1", userInput);
+				}
 				userInput = '';
 				userInput = null;
 				
 			}
 			
-			
-			
 			if (results.length != null){
 				if (results.domain != null){
 					var pc = new PassyCore();
 					var password = pc.getPassword(
-						this.masterPass,  // encrypted hash of master password
+						(results.useTempMaster ? results.tempMaster : this.masterPass),  // encrypted hash of master password
 						results.domain, // domain 
 						results.length	// length
 					);
+					if (results.suffix != null){
+						password += results.suffix;
+					}
+						
+					delete results.tempMaster; //remove that from memory
 					
 					if (! results.copy){
 						//see if there's something selected
@@ -117,7 +130,7 @@ CmdUtils.CreateCommand({
 		}
 		params = null;
 	},
-	parseParams: function(params){
+	parseParams: function(params, mods){
 		//passy <length> <domain>
 		//passy clear
 		//passy copy <length> <domain>
@@ -182,6 +195,7 @@ CmdUtils.CreateCommand({
 							results.domain = pc.getDomain(null);
 						} else {
 							results.length = this.getFirstParam(paramsA[1]);
+							results.domain = pc.getDomain(null);
 							if (paramsA.length == 3){
 								//oh my, how... explicit
 								results.domain = pc.getDomain(paramsA[2]);
@@ -189,6 +203,26 @@ CmdUtils.CreateCommand({
 						}
 					}
 				}
+				
+				//handle the mods
+				var withText = null;
+				results.useTempMaster = false;
+				results.suffix = null;
+				if (mods != null && mods["with"] != null && /\S+/.test(mods["with"].text)){
+					//either they want to use a temp master password
+					//or they want to tack something on to the end of the generated password
+					var withText = mods["with"].text;
+					if (/^temp\s*/i.test(withText)){
+						results.useTempMaster = true;
+						if(/^temp\s+\S+.*/.test(withText)){
+							//apparently they wanted a temporary password AND a suffix
+							results.suffix = withText.replace(/^temp\s+/i, "");
+						}
+					} else if (/\S+/.test(withText)){
+						results.suffix = withText;
+					}
+				}
+				
 			} else { //p1 == null means unknown command
 				results.command = null;
 			}

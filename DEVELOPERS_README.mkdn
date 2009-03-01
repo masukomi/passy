@@ -2,10 +2,12 @@
 
 There are multiple versions of passy, one for Ubiquity, one for the web, and soon, a Firefox extension. All of these use the same core javascript file ( passy_core.js ). In order to accomidate this build.sh has been added to copy the latest version from core/passy_core.js into the appropriate directories and merge it into the ubiquity script.
 
-### Ubiquity ### 
+### Ubiquity version ### 
 
 ubiquity/passy_ubiquity_section.js contains the Ubiquity specific portions of the Ubiquity script.
 
-ubiquity/passy.js is the official passy script for Ubiquity. It is the merger of core/passy_core.js and ubiquity/passy_ubiquity_section.js and is build with build.sh. It should _never_ be manually edited.  
+ubiquity/passy.js is the official passy script for Ubiquity. It is the merger of core/passy_core.js and ubiquity/passy_ubiquity_section.js and is build with build.sh. It ( passy.js ) should _never_ be edited directly.  
 
+### Web version ###
 
+web/javascript/passy_core.js is copied from core/passy_core.js and should _never_ be edited directly.

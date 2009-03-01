@@ -1,0 +1,74 @@
+<html>
+	<head>
+		<title>passy - a strong and simple password generator for Ubiquity</title>
+		<script type="text/javascript" src="javascript/passy_core.js"></script>
+		<script type="text/javascript" src="javascript/sha1.js"></script>
+		<script language="JavaScript">
+			function generatePassword(length){
+				var domain = document.getElementById("domain").value;
+				if (domain == ''){
+					alert("You must specify a domain to generate this password for.");
+				}
+				var masterPass = document.getElementById("password").value;
+				if (masterPass == ''){
+					alert("You must specify a master password to use when generating your password.");
+				}
+				masterPass = hex_sha1(masterPass);
+				var pc = new PassyCore();
+				document.getElementById("generated-p").value = 
+					pc.getPassword(
+						masterPass,  // encrypted hash of master password
+						domain, // domain 
+						length	// length
+					);
+					
+			}
+		</script>
+		
+	</head>
+	<body onLoad="javascript:document.getElementById('generated-p').value=''">
+		<h2>passy, the web version.</h2>
+		<div id="notice">
+			The information you enter here <i>never</i> leaves your browser 
+			and will not be stored. Any password generated here will be identical 
+			to passwords generated with passy for Ubiquity.
+		</div>
+		<div id="form_container">
+			<form>
+				<div class="field-header">
+					Your Master Password:
+				</div>
+				<div class="field-holder">
+					<input id="password" type="password" value="" />
+				</div>
+				<div class="field-header">
+					Domain:
+				</div>
+				<div class="field-holder">
+					<input id="domain" type="text" value="" />
+				</div>
+				<div class="field-header">
+					Choose a length:
+				</div>
+				<div class="buttons-holder">
+					<input type="button" value="Small" onClick="javascript:generatePassword('short')"/>
+					<input type="button" value="Med." onClick="javascript:generatePassword('med')"/>
+					<input type="button" value="Long" onClick="javascript:generatePassword('long')"/>
+				</div>
+				<div class="field-header">
+					Generated Password:
+				</div>
+				<div class="field-holder">
+					<input id="generated-p" type="text" value="" />
+				</div>
+				
+			</form>
+		</div>
+		<p>
+			Please note that the web version of passy is intended for use when 
+			you don't have access to your main computer or browser. If you do
+			we've got a nice version of this for Ubiquity you should checkout, 
+			and a Firefox extension is in the works. 
+		</p>
+	</body>
+</html>

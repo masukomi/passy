@@ -11,6 +11,8 @@
 
 <p>Only one master password to remember, strong site specific passwords, quick and easy usage, what more could you want? </p>
 
+<p>The current version of passy for Ubiquity is 0.3.</p>
+
 <h2>Installation</h2>
 
 <p>First install Ubiquity. Then, if you don't see a "Subscribe" button above, go to <a href="http://www.masukomi.org/projects/ubiquity/passy/">the passy home page</a>. Click on the Subscribe button and you're done. </p>
@@ -39,6 +41,23 @@
  passy copy
  passy copy long
  passy copy long example.com
+ passy copy long example.com with temp
+</pre>
+
+<p>"with" modifiers. The "with" clause can be used in two ways. If you say "with temp" it will ask you for a master password that will only be used this time and not stored. If you've already entered a master password this session that will remain intact for future password generation. </p>
+
+<pre>
+ passy with temp
+ passy long with temp
+ passy long example.com with temp
+</pre>
+
+<p>If you enter anything other than "temp" after with it'll use it as a suffix that is appended to the end of the generated password. So, if the generated password was 4a3B7e7b4696266a then adding "with !%2" would generate 4a3B7e7b4696266a!%2  This is useful for the occasional site that requires punctuation, or other special characters in a password. Because passy never stores passwords you'll need to remember which sites you added a suffix to.</p>
+
+<pre>
+ passy with !%2 
+ passy long with !%2
+ passy long example.com with !%2
 </pre>
 
 <p>The first time you run passy in each session it will ask you for your master password, which it will encrypt and store in memory until you close Firefox or clear it with:</p>
@@ -79,7 +98,7 @@
 
 <h2>Help</h2>
 
-<p>If you've got questions that aren't answered here, or in the instructions you see when using passy, just drop an e-mail to <a href="&#x6D;a&#105;&#x6C;&#x74;&#x6F;:&#x6D;&#x61;&#115;&#x75;k&#111;&#x6D;&#x69;&#64;&#x6D;a&#x73;&#117;k&#x6F;&#x6D;&#105;&#46;o&#x72;&#x67;">&#x6D;&#x61;&#115;&#x75;k&#111;&#x6D;&#x69;&#64;&#x6D;a&#x73;&#117;k&#x6F;&#x6D;&#105;&#46;o&#x72;&#x67;</a></p>
+<p>If you've got questions that aren't answered here, or in the instructions you see when using passy, just drop an e-mail to <a href="&#x6D;&#97;&#x69;&#108;&#116;&#x6F;:&#x6D;&#97;&#115;&#x75;&#107;&#x6F;&#x6D;&#x69;&#64;m&#x61;&#x73;&#x75;&#x6B;&#111;&#x6D;&#105;&#x2E;&#111;&#x72;&#103;">&#x6D;&#97;&#115;&#x75;&#107;&#x6F;&#x6D;&#x69;&#64;m&#x61;&#x73;&#x75;&#x6B;&#111;&#x6D;&#105;&#x2E;&#111;&#x72;&#103;</a></p>
 
 <h2>TODO</h2>
 

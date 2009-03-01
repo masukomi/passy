@@ -1,5 +1,8 @@
 # passy Version History / Change Log #
 
+## Version 0.3 ##
+Added a with clause to support temporary master passwords and suffixes.
+
 ## Version 0.2 ##
 
 Switched to using domain names of a minimum significant length.

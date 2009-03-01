@@ -1,5 +1,6 @@
-## Pre-Release tests ##
+## Pre-Release steps ##
 
+### tests ###
 Please check the following options before releasing just to make sure everything works as expected
 
 passy
@@ -26,3 +27,6 @@ passy copy long example.com
 passy copy long example.com with temp
 passy copy long example.com with baz
 
+### actions ###
+
+Update version number in help section.

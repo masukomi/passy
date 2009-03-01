@@ -22,7 +22,7 @@ CmdUtils.CreateCommand({
 			var undefined_var;
 			if (results.length != null && results.length != undefined_var){
 				if (results.domain != null){
-					previewHeader = "Will generate <em class='passy'>" + results.length + "</em> length password for <em class='passy'>" + results.domain + "</em>";
+					previewHeader = "Will generate <em class='passy'>" + results.length + " length</em> password for <em class='passy'>" + results.domain + "</em>";
 					if (! results.copy){
 						previewHeader += " and <em class='passy'>insert</em> it into the page"
 					} else {
@@ -43,6 +43,9 @@ CmdUtils.CreateCommand({
 				previewHeader ="<p>Wait... What?</p>";
 			}
 			
+			previewHeader = previewHeader.replace(/<em/g, "<em style='color: #9999FF;'");
+			//6666FF looks decent too, a little too close to link color though.
+
 			pblock.innerHTML = previewHeader + "<p>&nbsp;</p>" + this.help;
 
 		} else {

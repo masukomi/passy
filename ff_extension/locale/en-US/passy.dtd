@@ -1,0 +1,12 @@
+<!ENTITY passy.label "Open Passy">
+<!ENTITY passyContext.label "Open Passy">
+<!ENTITY passyContext.accesskey "P">
+<!ENTITY passyWindow.windowTitle "Passy">
+<!ENTITY passyWindow.masterPassword "Master Password:">
+<!ENTITY passyWindow.domain "Domain (location):">
+<!ENTITY passyWindow.resultInsert "Insert into field">
+<!ENTITY passyWindow.resultCopy "Copy">
+<!ENTITY passyWindow.compute8 "Short">
+<!ENTITY passyWindow.compute16 "Medium">
+<!ENTITY passyWindow.compute32 "Long">
+<!ENTITY passyWindow.homepageLink "Passy Homepage">

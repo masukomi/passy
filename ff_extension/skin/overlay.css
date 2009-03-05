@@ -1,0 +1,15 @@
+.passy-windowlabel
+{
+    font-weight: bold;
+}
+
+.passy-link
+{
+    color: blue;
+    text-decoration: underline;
+}
+.passy-menu
+{
+    list-style-image: url("chrome://passy/skin/passy.png");
+}
+

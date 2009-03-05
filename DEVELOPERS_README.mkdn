@@ -11,3 +11,17 @@ ubiquity/passy.js is the official passy script for Ubiquity. It is the merger of
 ### Web version ###
 
 web/javascript/passy_core.js is copied from core/passy_core.js and should _never_ be edited directly.
+
+### Firefox Extension version ###
+
+ff_extension/content/pasy_core.js is copied from core/passy_core.js and should _never_ be edited directly.
+
+the root build.sh will build everything
+ff_extension/build.sh will build just the ff_extension
+
+This extension has not been formally announced yet. 
+Please see the TODO.mdkn for details on things you can do to help get it ready.
+
+It was written by Greg Stoll ( http://www.gregstoll.com ) in response to 
+http://weblog.masukomi.org/2009/02/23/code-bounty-for-firefox-password-generator
+

@@ -1,0 +1,25 @@
+## IN-PROGRESS: ## 
+
+* add real icon (32x32) (in progress)
+* beautify beautify beautify
+
+## TODO: ##
+
+* always load in the center of the window
+* set focus to top textbox
+* add toolbar button (use icon from above or placeholder if that isn't done yet)
+** (example here: http://www.builderau.com.au/program/xml/soa/Getting-started-with-Firefox-Extensions/0,339028469,339293773,00.htm )
+* if possible leverage Firefox's cert checking mechanism that colors the awesomebar to warn against untrusted sites here too.
+
+## DONE: ##
+
+* alternating icons based on http/https
+* yellow/white background based on http/https
+* disable fill in button if not selecting textbox
+* fill in domain name
+* clear master password on close!
+* do sha1
+* copy to clipboard
+* do fill in
+* save preference for fill in or copy
+* make link work

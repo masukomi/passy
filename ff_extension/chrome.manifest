@@ -1,0 +1,5 @@
+content	passy	jar:chrome/passy.jar!/content/
+locale	passy	en-US	jar:chrome/passy.jar!/locale/en-US/
+skin	passy	classic/1.0	jar:chrome/passy.jar!/skin/
+overlay	chrome://browser/content/browser.xul	chrome://passy/content/firefoxOverlay.xul
+# content	passy	chrome://passy/content/passwordWindow.xul

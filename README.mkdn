@@ -6,7 +6,9 @@ The idea is that it should be easy to generate AND retrieve secure passwords for
 
 Only one master password to remember, strong site specific passwords, quick and easy usage, what more could you want? 
 
-The current version of passy for Ubiquity is 0.3.
+The current version of passy for Ubiquity is 0.3.1.
+
+
 
 ## Installation ##
 

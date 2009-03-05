@@ -1,5 +1,5 @@
-<!ENTITY passy.label "Open Passy">
-<!ENTITY passyContext.label "Open Passy">
+<!ENTITY passy.label "Passy">
+<!ENTITY passyContext.label "Passy">
 <!ENTITY passyContext.accesskey "P">
 <!ENTITY passyWindow.windowTitle "Passy">
 <!ENTITY passyWindow.masterPassword "Master Password:">

@@ -7,7 +7,7 @@ CmdUtils.CreateCommand({
 	description: "A strong, and simple, password generator.",
 	homepage: "http://www.masukomi.org/projects/ubiquity/passy/index.html",
 	author : {name: "masukomi", email:"masukomi@masukomi.org"},
-		help : "<span style='font-size: 80%;'><dl><dt>Usage:</dt><dd><dl><dt style='font-style:italic;'>passy</dt><dd>Generates a medium length password for the current domain and inserts it into the page.</dd><dt style='font-style:italic;'>passy short/med/long</dt><dd>Same as above but with a password of your specified length.</dd><dt style='font-style:italic;'>passy short/med/long example.com</dt><dd>Same as above but with your specifed length and domain.</dd><dt style='font-style:italic;'>passy copy (short/med/long (domain))</dt><dd>Works just like the options above but copies the password to your clipboard instead.</dd><dt style='font-style:italic;'>... with ____</dt><dd>The with modifier can be used in two ways. <dl><dt style='font-style:italic;'>with temp</dt><dd>If you say \"with temp\" it'll ask you for a temporary master password that won't be stored. If you've already stored one this session it'll remain untouched for use the next time.</dd><dt style='font-style:italic;'>with &lt;suffix (anything except \"temp\")&gt;</dt><dd>This will append whatever text you enter to the end of the generated password. Useful if they require characters other than letters or numbers in your passwords.</dd></dl></dd><dt style='font-style:italic;'>passy clear</dt><dd>Clears your encrypted master password from memory</dd></dl></dd></dl><p>This is version 0.3 of passy.</p></span>",
+		help : "<span style='font-size: 80%;'><dl><dt>Usage:</dt><dd><dl><dt style='font-style:italic;'>passy</dt><dd>Generates a medium length password for the current domain and inserts it into the page.</dd><dt style='font-style:italic;'>passy short/med/long</dt><dd>Same as above but with a password of your specified length.</dd><dt style='font-style:italic;'>passy short/med/long example.com</dt><dd>Same as above but with your specifed length and domain.</dd><dt style='font-style:italic;'>passy copy (short/med/long (domain))</dt><dd>Works just like the options above but copies the password to your clipboard instead.</dd><dt style='font-style:italic;'>... with ____</dt><dd>The with modifier can be used in two ways. <dl><dt style='font-style:italic;'>with temp</dt><dd>If you say \"with temp\" it'll ask you for a temporary master password that won't be stored. If you've already stored one this session it'll remain untouched for use the next time.</dd><dt style='font-style:italic;'>with &lt;suffix (anything except \"temp\")&gt;</dt><dd>This will append whatever text you enter to the end of the generated password. Useful if they require characters other than letters or numbers in your passwords.</dd></dl></dd><dt style='font-style:italic;'>passy clear</dt><dd>Clears your encrypted master password from memory</dd></dl></dd></dl><p>This is version 0.3.1 of passy.</p></span>",
 
 	license: "MIT",
 	icon: "http://www.masukomi.org/projects/ubiquity/passy/icons/lock.png",
@@ -280,9 +280,13 @@ function PassyCore() {
 	this.initialize = function(){
 		//CmdUtils.log("in initialize");
 	};
-	this.getDomain = function(specifiedDomain){
+	this.getDomain = function(specifiedDomain, shorten){
 		//CmdUtils.log("in getDomain " + specifiedDomain);
-		if (specifiedDomain == null){
+		var undefined_var;
+		if (shorten === undefined_var){
+			shorten = false;
+		}
+		if (specifiedDomain == null || shorten==true){
 			/*
 			Domain Extraction algorithm Copyright 2005 Collin Jackson
 
@@ -297,7 +301,22 @@ function PassyCore() {
 			*/
 
 			
-			var fullDomain = CmdUtils.getDocument( ).domain;
+			var fullDomain = null;
+			if (specifiedDomain == null){
+					//possible we've been given something to shorten but, unexpectedly,
+					//specifiedDomain was null
+				if (typeof CmdUtils == 'object' && typeof CmdUtils.getDocument == 'function'){
+					fullDomain = CmdUtils.getDocument( ).domain;
+				} else {
+					// must be running in ff extension (web page never sends null here).
+					// but if ff has sent us null then we're probably on something 
+					//domainless like about:blank so....
+					fullDomain = ''; 
+				}
+			} else {
+				// we've been passed something to shorten.
+				fullDomain = specifiedDomain;
+			}
 			var host = fullDomain.split('.');
 			var shortDomain = '';
 			if(host[2]!=null) { // if it has at least 3 sections
@@ -306,7 +325,7 @@ function PassyCore() {
 				shortDomain=host[host.length-2]+'.'+host[host.length-1];
 				for(var i=0;i<domains.length;i++) {
 					if(shortDomain==domains[i]) { // if the last two sections match any in the list
-						shortDomain=host[host.length-3]+'.'+specifiedDomain; // tack on the one before it
+						shortDomain=host[host.length-3]+'.'+shortDomain; // tack on the one before it
 						break;
 					}
 				}

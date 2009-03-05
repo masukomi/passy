@@ -280,9 +280,13 @@ function PassyCore() {
 	this.initialize = function(){
 		//CmdUtils.log("in initialize");
 	};
-	this.getDomain = function(specifiedDomain){
+	this.getDomain = function(specifiedDomain, shorten){
 		//CmdUtils.log("in getDomain " + specifiedDomain);
-		if (specifiedDomain == null){
+		var undefined_var;
+		if (shorten === undefined_var){
+			shorten = false;
+		}
+		if (specifiedDomain == null || shorten==true){
 			/*
 			Domain Extraction algorithm Copyright 2005 Collin Jackson
 
@@ -297,7 +301,22 @@ function PassyCore() {
 			*/
 
 			
-			var fullDomain = CmdUtils.getDocument( ).domain;
+			var fullDomain = null;
+			if (specifiedDomain == null){
+					//possible we've been given something to shorten but, unexpectedly,
+					//specifiedDomain was null
+				if (typeof CmdUtils == 'object' && typeof CmdUtils.getDocument == 'function'){
+					fullDomain = CmdUtils.getDocument( ).domain;
+				} else {
+					// must be running in ff extension (web page never sends null here).
+					// but if ff has sent us null then we're probably on something 
+					//domainless like about:blank so....
+					fullDomain = ''; 
+				}
+			} else {
+				// we've been passed something to shorten.
+				fullDomain = specifiedDomain;
+			}
 			var host = fullDomain.split('.');
 			var shortDomain = '';
 			if(host[2]!=null) { // if it has at least 3 sections
@@ -306,7 +325,7 @@ function PassyCore() {
 				shortDomain=host[host.length-2]+'.'+host[host.length-1];
 				for(var i=0;i<domains.length;i++) {
 					if(shortDomain==domains[i]) { // if the last two sections match any in the list
-						shortDomain=host[host.length-3]+'.'+specifiedDomain; // tack on the one before it
+						shortDomain=host[host.length-3]+'.'+shortDomain; // tack on the one before it
 						break;
 					}
 				}

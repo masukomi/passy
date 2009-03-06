@@ -1,66 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  - Copyright (c) 2009 Kate Rhodes ( http://www.masukomi.org )
-  -
-  - Permission to use, copy, modify, and distribute this software for any
-  - purpose with or without fee is hereby granted, provided that the above
-  - copyright notice and this permission notice appear in all copies.
-  -
-  - THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-  - WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-  - MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-  - ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-  - WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-  - ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-  - OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-  - -->
+	- Copyright (c) 2009 Kate Rhodes ( http://www.masukomi.org )
+	-
+	- Permission to use, copy, modify, and distribute this software for any
+	- purpose with or without fee is hereby granted, provided that the above
+	- copyright notice and this permission notice appear in all copies.
+	-
+	- THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+	- WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+	- MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+	- ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+	- WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+	- ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+	- OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+	- -->
 
 <?xml-stylesheet href="chrome://passy/skin/overlay.css" type="text/css"?>
 <!DOCTYPE overlay SYSTEM "chrome://passy/locale/passy.dtd">
 <overlay id="passy-overlay"
-         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-  <script src="passy_core.js"/>
-  <script src="overlay.js"/>
-  <script src="sha1.js"/>
-  <stringbundleset id="stringbundleset">
-    <stringbundle id="passy-strings" src="chrome://passy/locale/passy.properties"/>
-  </stringbundleset>
+		 xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	<script src="passy_core.js"/>
+	<script src="overlay.js"/>
+	<script src="sha1.js"/>
+	<stringbundleset id="stringbundleset">
+	<stringbundle id="passy-strings" src="chrome://passy/locale/passy.properties"/>
+	</stringbundleset>
 
-  <menupopup id="menu_ToolsPopup">
-    <menuitem id="passy-hello" label="&passy.label;" 
-        image="chrome://passy/skin/passy.png"
-              oncommand="passy.onMenuItemCommand(event);"/>
-  </menupopup>
-  <popup id="contentAreaContextMenu">
-    <menuitem id="context-passy" label="&passyContext.label;"
-              class="menuitem-iconic passy-menu"
-              image="chrome://passy/skin/passy.png"
-              accesskey="&passyContext.accesskey;"
-              insertafter="context-stop"
-              oncommand="passy.onMenuItemCommand(event)"/>
-  </popup>
-  <popup id="main-window">
-      <panel id="passy-mainWindow" title="&passyWindow.windowTitle;">
-          <vbox>
-              <hbox id="passy-topbar">
-                  <image id="passy-icon-secure" src="chrome://passy/skin/passy.png"/>
-                  <image id="passy-icon-notsecure" src="chrome://passy/skin/lock_open.png"/>
-                  <label class="passy-windowlabel" value="&passyWindow.masterPassword;" control="master-passwordbox"/>
-              </hbox>
-              <textbox id="passy-master-passwordbox" type="password"/>
-              <label class="passy-windowlabel" value="&passyWindow.domain;" control="domainBox"/>
-              <textbox id="passy-domainBox"/>
-              <radiogroup id="passy-result-radiogroup" orient="horizontal">
-                  <radio id="passy-result-insert" label="&passyWindow.resultInsert;"/>
-                  <radio id="passy-result-copy" label="&passyWindow.resultCopy;"/>
-              </radiogroup>
-              <hbox>
-                  <button id="passy-compute-8" label="&passyWindow.compute8;" oncommand="passy.doPassword('short');"/>
-                  <button id="passy-compute-16" label="&passyWindow.compute16;" oncommand="passy.doPassword('med');"/>
-                  <button id="passy-compute-32" label="&passyWindow.compute32;" oncommand="passy.doPassword('long');"/>
-              </hbox>
-              <description class="passy-link" value="&passyWindow.homepageLink;" onclick="gBrowser.addTab('http://www.getpassy.com/');"/>
-          </vbox>
-      </panel>
-  </popup>
+	<menupopup id="menu_ToolsPopup">
+	<menuitem id="passy-hello" label="&passy.label;" 
+		image="chrome://passy/skin/passy.png"
+				oncommand="passy.onMenuItemCommand(event);"/>
+	</menupopup>
+	<popup id="contentAreaContextMenu">
+	<menuitem id="context-passy" label="&passyContext.label;"
+				class="menuitem-iconic passy-menu"
+				image="chrome://passy/skin/passy.png"
+				accesskey="&passyContext.accesskey;"
+				insertafter="context-stop"
+				oncommand="passy.onMenuItemCommand(event)"/>
+	</popup>
+	<popup id="main-window">
+		<panel id="passy-mainWindow" title="&passyWindow.windowTitle;">
+			<vbox>
+				<hbox id="passy-topbar">
+					<image id="passy-icon-secure" src="chrome://passy/skin/passy.png"/>
+					<image id="passy-icon-notsecure" src="chrome://passy/skin/lock_open.png"/>
+					<label class="passy-windowlabel" value="&passyWindow.masterPassword;" control="master-passwordbox"/>
+				</hbox>
+				<textbox id="passy-master-passwordbox" type="password"/>
+				<label class="passy-windowlabel" value="&passyWindow.domain;" control="domainBox"/>
+				<textbox id="passy-domainBox"/>
+				<radiogroup id="passy-result-radiogroup" orient="horizontal">
+					<radio id="passy-result-insert" label="&passyWindow.resultInsert;"/>
+					<radio id="passy-result-copy" label="&passyWindow.resultCopy;"/>
+				</radiogroup>
+				<hbox>
+					<button id="passy-compute-8" label="&passyWindow.compute8;" oncommand="passy.doPassword('short');"/>
+					<button id="passy-compute-16" label="&passyWindow.compute16;" oncommand="passy.doPassword('med');"/>
+					<button id="passy-compute-32" label="&passyWindow.compute32;" oncommand="passy.doPassword('long');"/>
+				</hbox>
+				<description class="passy-link" value="&passyWindow.homepageLink;" onclick="gBrowser.addTab('http://www.getpassy.com/');"/>
+			</vbox>
+		</panel>
+	</popup>
 </overlay>

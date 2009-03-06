@@ -65,7 +65,13 @@ var passy = {
 	// Fill in the domain
 	document.getElementById('passy-domainBox').value = pc.getDomain(ownerDocument.domain, true);
 	
-	mainWindow.openPopup(document.popupNode, "at_pointer", 0, 0, false, false);
+    var width = 275;
+    var height = 166;
+    var left = parseInt((screen.availWidth/2) - (width/2));
+    var top = parseInt((screen.availHeight/2) - (height/2));
+	//myWindow = window.open(url, "subWind", windowFeatures);
+	mainWindow.openPopupAtScreen( left, top, false );
+	//mainWindow.openPopup(document.popupNode, "at_pointer", 0, 0, false, false);
 	document.getElementById('passy-master-passwordbox').value = '';
 	document.getElementById('passy-master-passwordbox').focus();
 

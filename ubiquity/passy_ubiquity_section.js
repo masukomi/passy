@@ -2,6 +2,7 @@
 /// Please note passy.js is the combination of passy_ubiquity_section.js
 /// and passy_core.js
 
+
 CmdUtils.CreateCommand({
 	name: "passy",
 	description: "A strong, and simple, password generator.",
@@ -58,65 +59,163 @@ CmdUtils.CreateCommand({
 			//}
 		}
 	},
+	
+
+	
 	execute: function( params, mods ) {
 		var results = this.parseParams(params, mods);
-
+		
 		if (results.command != 'clear'){ // only other option is genpass
 			if (results.length == null){
 				displayMessage("Sorry, I'm not sure what you wanted me to do.");
 				return;
 			}
 			
-			// do we have a master password stored?
-			if (this.masterPass == null || results.useTempMaster){
-				//TODO launch a modal dialog with a password field 
-				// so that the password isn't displayed in the open 
-				// during entry.
-				var userInput = Utils.currentChromeWindow.prompt("I'll need your "
-					+ (results.useTempMaster ? "temporary " : '')
-					+ "master password");
-				
-				if (userInput == null || userInput == ''){
-					displayMessage("You must enter a master password.");
-					return;
-				}
-				if (! results.useTempMaster){
-					this.masterPass = Utils.computeCryptoHash("SHA1", userInput);
-				} else {
-					results.tempMaster = Utils.computeCryptoHash("SHA1", userInput);
-				}
-				userInput = '';
-				userInput = null;
-				
-			}
+			
 			
 			if (results.length != null){
 				if (results.domain != null){
-					var pc = new PassyCore();
-					var password = pc.getPassword(
-						(results.useTempMaster ? results.tempMaster : this.masterPass),  // encrypted hash of master password
-						results.domain, // domain 
-						results.length	// length
-					);
-					if (results.suffix != null){
-						password += results.suffix;
-					}
+				
+				
+					// do we have a master password stored?
+					if (getMasterPass() == null || results.useTempMaster){
+						//TODO launch a modal dialog with a password field 
+						// so that the password isn't displayed in the open 
+						// during entry.
+
 						
-					delete results.tempMaster; //remove that from memory
-					
-					if (! results.copy){
-						//see if there's something selected
-						if (results.hasFocus){
-							CmdUtils.setSelection(password , {text:password});
-							displayMessage("Password inserted into page.");
-						} else {
-							displayMessage("Select something for me to insert it into.");
-						}
+
+						/////////////////////////////////
+						//// BEGIN Password Dialog
+						
+						// most of this dialog code is courtesy of 
+						// Halobrite.com's Transparent Message script
+						// http://halobrite.com/ubiquity/#transparent-message
+
+
+						var doc = CmdUtils.getDocumentInsecure();
+						var msgBox = doc.getElementById("transparent-msg");
+						if (msgBox == null){
+								var cssMsg = {  position: "fixed",
+												top: "130px",
+												left: "25%",
+												width: "50%",
+												color: "white",
+												textAlign: "center",
+												opacity: "0",
+												zIndex: "100000",
+												display: "none"
+								};
+											 
+								var cssRBox = { display: "block",
+												zIndex: "-10"
+								};
+								
+								var cssR = [ {margin: "0 5px"},
+											 {margin: "0 3px"},
+											 {margin: "0 2px"},
+											 {margin: "0 1px", height: "2px"}
+								];
+								var cssRAll = { display: "block",
+												height: "1px",
+												overflow: "hidden",
+												background: "black"
+								};
+								
+								var cssContent = { width: "100%",
+												   background: "black",
+								};
+								
+								var cssContentInner = { display: "block",
+														color: "white",
+														textAlign: "center",
+														margin: "0 auto",
+														padding: "15px",
+														fontSize: "22px",
+														fontFamily: "arial, sans-serif",
+													
+								};
+								
+								// Create the elements
+								msgBox = _createElement("div", "transparent-msg", cssMsg);
+								
+								var rTop = _createElement("b", "rtop", cssRBox);
+								for(i=1; i<=4; i++) {
+									var r = _createElement("b", "r" + i, jQuery.extend(cssR[i-1], cssRAll) );
+									rTop.appendChild(r);
+								}
+								msgBox.appendChild(rTop);
+								
+								var content = _createElement("div", "transparent-msg-content", cssContent);
+								var contentInner = _createElement("div", "transparent-msg-content-inner", cssContentInner);
+								content.appendChild(contentInner);
+								msgBox.appendChild(content);
+								
+								var rBottom = _createElement("b", "rbottom", cssRBox);
+								for(j=4; j>0; j--) {
+									var r = _createElement("b", "r" + j, jQuery.extend(cssR[j-1], cssRAll) );
+									rBottom.appendChild(r);
+								}
+								msgBox.appendChild(rBottom);
+								
+								CmdUtils.getDocumentInsecure().body.appendChild(msgBox);
+							
+								
+								var instr = _createElement("p", "form-instructions");
+								jQuery(instr).text("Enter your master password:");
+								contentInner.appendChild(instr);
+								var passyForm = _createElement("form", "master-pass-form");
+								jQuery(passyForm).attr("action", "#");
+								jQuery(passyForm).attr("autocomplete", "off"); 
+								// never want it trying to autocomplete or store the master password field 
+								// because a) it'll confuse people and b) it's seriously dangerous
+								// with everything keyed off of said password and firefox defaulting to 
+								// storing passwords in plain text.
+								var passwordInput = _createElement("input", "master-password");
+								jQuery(passwordInput).attr("type", "password");
+								passyForm.appendChild(passwordInput);
+								//passyForm.appendChild(_createElement("br"));
+								var passyButton = _createElement("input", "master-pass-submit-button");
+								jQuery(passyButton).attr("type", "submit");
+								jQuery(passyButton).attr("value", "Generate");
+								passyForm.appendChild(passyButton);
+								jQuery(passyForm).bind("submit", function() { 
+									///// BEGIN PASSY GENERATION
+									var userInput = passwordInput.value;
+									if (userInput == null || userInput == ''){
+										displayMessage("You must enter a master password.");
+										return;
+									}
+									if (! results.useTempMaster){
+										setMasterPass(Utils.computeCryptoHash("SHA1", userInput));
+									} else {
+										results.tempMaster = Utils.computeCryptoHash("SHA1", userInput);
+									}
+									userInput = '';
+									userInput = null;
+									
+									generatePasswordWithOptions((results.useTempMaster ? results.tempMaster : getMasterPass()), results);
+									
+									///// END PASSY GENERATION
+									hide();
+									
+								});
+								contentInner.appendChild(passyForm);
+							}
+							jQuery(msgBox).show().animate({opacity: "0.8"}, 200);
+							jQuery(msgBox).focus();
+						
+						//// END Password Dialog
+						////////////////////////////////
 					} else {
-						CmdUtils.copyToClipboard( password )
-						displayMessage("Copied password to clipboard.");
-						
+						generatePasswordWithOptions(getMasterPass(), results);
 					}
+					
+					
+				
+
+
+
 				} else {
 					displayMessage("I was unable to determine a domain.");
 				}
@@ -163,6 +262,7 @@ CmdUtils.CreateCommand({
 		// (of any sort) selected. text/password/textarea/awesomebar/search box...
 		if (focused != null && typeof focused.setSelectionRange == 'function'){
 			results.hasFocus =true;
+			results.focusedElement = focused;//we'll need this later
 		} else {
 			results.hasFocus = false;
 		}
@@ -198,8 +298,9 @@ CmdUtils.CreateCommand({
 							results.domain = pc.getDomain(null);
 						} else {
 							results.length = this.getFirstParam(paramsA[1]);
-							results.domain = pc.getDomain(null);
-							if (paramsA.length == 3){
+							if (paramsA.length == 2){
+								results.domain = pc.getDomain(null);
+							} else if (paramsA.length == 3){
 								//oh my, how... explicit
 								results.domain = pc.getDomain(paramsA[2]);
 							}
@@ -267,8 +368,74 @@ CmdUtils.CreateCommand({
 		
 	}
 		
-})
+});
 
+
+// these are out here to get around some scoping issues with calbacks.
+function setMasterPass(masterPass){
+	this.masterPass = masterPass;
+};
+function getMasterPass(){
+	return this.masterPass;
+};
+
+
+function generatePasswordWithOptions(currentMasterPass, options){
+		
+		var pc = new PassyCore();
+		var password = pc.getPassword(
+			currentMasterPass,  // encrypted hash of master password
+			options.domain, // domain 
+			options.length	// length
+		);
+		if (options.suffix != null){
+			password += options.suffix;
+		}
+			
+		delete options.tempMaster; //remove that from memory
+		
+		if (! options.copy){
+			//see if there's something selected
+			if (options.hasFocus && typeof options.focusedElement == "object"){
+				//CmdUtils.setSelection(password , {text:password});
+				// Can't use the above because if they had to enter 
+				// a password then that form would have stolen focus.
+				options.focusedElement.value = password;
+				displayMessage("Password inserted into page.");
+			} else {
+				displayMessage("Select something for me to insert it into.");
+			}
+		} else {
+			CmdUtils.copyToClipboard( password )
+			displayMessage("Copied password to clipboard.");
+			
+		}
+		
+	};
+
+function hide() {
+				//_clear();
+				var doc = CmdUtils.getDocumentInsecure();
+		   
+				var msgBox = doc.getElementById("transparent-msg");
+				var passwordField =doc.getElementById("master-password");
+				passwordField.value = '';
+				//jQuery(msgBox).animate({opacity: "0.0"}, 500);
+				msgBox.style.display='none';
+			};
+
+function _createElement(type, id, css) {
+			var el = CmdUtils.getDocumentInsecure().createElement(type);
+			if(id) jQuery(el).attr("id", id);
+			if(css) jQuery(el).css(css);
+			
+			return el;
+		};
+function _clear() {
+			//jQuery(window).unbind("mousemove").unbind("click").unbind("keypress");
+			//Utils.clearTimeout( _T_GoAway );
+			//Utils.clearTimeout(_T_Event );
+		};
 
 ////////////// END passy_ubiquity_section.js ////////////////////
 

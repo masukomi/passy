@@ -32,6 +32,10 @@ function PassyCore() {
 					//specifiedDomain was null
 				if (typeof CmdUtils == 'object' && typeof CmdUtils.getDocument == 'function'){
 					fullDomain = CmdUtils.getDocument( ).domain;
+					if (fullDomain == null){
+						// this can happen on pages like about:blank or other local pages.
+						fullDomain = '';
+					}
 				} else {
 					// must be running in ff extension (web page never sends null here).
 					// but if ff has sent us null then we're probably on something 
